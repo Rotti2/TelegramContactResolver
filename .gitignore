@@ -44,3 +44,5 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/apps/telegram-contact-resolver-backend/src/config/appsettings.development.yaml
+/ormconfig.json

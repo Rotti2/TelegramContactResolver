@@ -1,0 +1,26 @@
+{
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tslint.json": "*",
+    ".eslintrc.json": "*",
+    "nx.json": "*",
+    "tsconfig.base.json": "*"
+  },
+  "affected": {
+    "defaultBase": "master"
+  },
+  "npmScope": "telegram-contact-resolver",
+  "projects": {
+    "TelegramContactResolver": {
+      "tags": []
+    },
+    "TelegramContactResolver-e2e": {
+      "tags": [],
+      "implicitDependencies": ["TelegramContactResolver"]
+    },
+    "telegram-contact-resolver-backend": {
+      "tags": []
+    }
+  }
+}

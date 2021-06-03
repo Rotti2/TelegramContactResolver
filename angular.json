@@ -1,7 +1,9 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "projects",
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "TelegramContactResolver",
   "projects": {
     "TelegramContactResolver": {
       "projectType": "application",
@@ -10,34 +12,32 @@
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/TelegramContactResolver",
+      "sourceRoot": "apps/TelegramContactResolver/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/TelegramContactResolver",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.app.json",
+            "outputPath": "dist/apps/TelegramContactResolver",
+            "index": "apps/TelegramContactResolver/src/index.html",
+            "main": "apps/TelegramContactResolver/src/main.ts",
+            "polyfills": "apps/TelegramContactResolver/src/polyfills.ts",
+            "tsConfig": "apps/TelegramContactResolver/tsconfig.app.json",
             "aot": true,
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "apps/TelegramContactResolver/src/favicon.ico",
+              "apps/TelegramContactResolver/src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["apps/TelegramContactResolver/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "apps/TelegramContactResolver/src/environments/environment.ts",
+                  "with": "apps/TelegramContactResolver/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -83,17 +83,15 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
+            "main": "apps/TelegramContactResolver/src/test.ts",
+            "polyfills": "apps/TelegramContactResolver/src/polyfills.ts",
+            "tsConfig": "apps/TelegramContactResolver/tsconfig.spec.json",
+            "karmaConfig": "apps/TelegramContactResolver/karma.conf.js",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              "apps/TelegramContactResolver/src/favicon.ico",
+              "apps/TelegramContactResolver/src/assets"
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "styles": ["apps/TelegramContactResolver/src/styles.scss"],
             "scripts": []
           }
         },
@@ -101,13 +99,10 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "apps/TelegramContactResolver/tsconfig.app.json",
+              "apps/TelegramContactResolver/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -123,6 +118,86 @@
           }
         }
       }
-    }},
-  "defaultProject": "TelegramContactResolver"
+    },
+    "TelegramContactResolver-e2e": {
+      "root": "apps/TelegramContactResolver-e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/TelegramContactResolver-e2e/protractor.conf.js",
+            "devServerTarget": "TelegramContactResolver:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "TelegramContactResolver:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/TelegramContactResolver-e2e/tsconfig.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "telegram-contact-resolver-backend": {
+      "root": "apps/telegram-contact-resolver-backend",
+      "sourceRoot": "apps/telegram-contact-resolver-backend/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/telegram-contact-resolver-backend",
+            "main": "apps/telegram-contact-resolver-backend/src/main.ts",
+            "tsConfig": "apps/telegram-contact-resolver-backend/tsconfig.app.json",
+            "assets": [
+              "apps/telegram-contact-resolver-backend/src/assets",
+              "apps/telegram-contact-resolver-backend/src/config"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/telegram-contact-resolver-backend/src/environments/environment.ts",
+                  "with": "apps/telegram-contact-resolver-backend/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "telegram-contact-resolver-backend:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/telegram-contact-resolver-backend/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/telegram-contact-resolver-backend"],
+          "options": {
+            "jestConfig": "apps/telegram-contact-resolver-backend/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  }
 }
