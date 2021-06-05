@@ -7,10 +7,12 @@ import { GroupEventEntry } from '../shared/models/group-event-entry.entity';
 import { GroupEvent } from '../shared/models/group-event.entity';
 import { GroupMember } from '../shared/models/group-member.entity';
 import { GroupEventEntryMessage } from '../shared/models/group-event-entry-message.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([TelegramUser, GroupEventEntry, GroupEvent, GroupMember, GroupEventEntryMessage])
+    TypeOrmModule.forFeature([TelegramUser, GroupEventEntry, GroupEvent, GroupMember, GroupEventEntryMessage]),
+    ConfigModule
   ],
   providers: [TelegramService, TelegramKeyboardMapperService],
   exports: [TelegramService]

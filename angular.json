@@ -159,6 +159,22 @@
             "assets": [
               "apps/telegram-contact-resolver-backend/src/assets",
               "apps/telegram-contact-resolver-backend/src/config"
+            ],
+            "externalDependencies": [
+              "@nestjs/microservices",
+              "cache-manager",
+              "@nestjs/microservices/microservices-module",
+              "@nestjs/websockets/socket-module",
+              "class-transformer",
+              "apollo-server-fastify",
+              "aws-sdk",
+              "class-validator",
+              "mock-aws-s3",
+              "nock",
+              "spdx-exceptions",
+              "spdx-license-ids",
+              "spdx-license-ids/deprecated",
+              "node-gyp"
             ]
           },
           "configurations": {
