@@ -20,7 +20,7 @@ export class GroupEventScheduleService {
     const groupEvents: GroupEvent[] = await this.groupEventRepository.find();
     groupEvents.forEach((groupEvent: GroupEvent) => {
       const job = new CronJob(groupEvent.cronExpression, () => {
-        this.resolveContacts(groupEvent, new Date());
+        this.resolveContacts(groupEvent, new Date(), job.nextDate().toDate());
       });
       this.schedulerRegistry.addCronJob(groupEvent.name, job);
       job.start();
@@ -28,8 +28,9 @@ export class GroupEventScheduleService {
     });
   }
 
-  private async resolveContacts(groupEvent: GroupEvent, date: Date): Promise<void> {
+  private async resolveContacts(groupEvent: GroupEvent, date: Date, nextExecution: Date): Promise<void> {
     Logger.log(`Resolving Contacts for ${groupEvent.name}. Writing message to ${groupEvent.leaders.map(l => l.username).toString()}`, 'GroupEventSchedule');
+    Logger.log(`Next Schedule for ${groupEvent.name}: ${nextExecution.toLocaleString()}`, 'GroupEventSchedule');
     const groupEventEntry: GroupEventEntry = new GroupEventEntry(groupEvent, date);
     const createdGroupEventEntry = await this.groupEventEntryRepository.create(groupEventEntry);
     const savedGroupEventEntry = await this.groupEventEntryRepository.save(createdGroupEventEntry);
