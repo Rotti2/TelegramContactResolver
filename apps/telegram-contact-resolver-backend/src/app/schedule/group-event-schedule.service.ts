@@ -24,11 +24,12 @@ export class GroupEventScheduleService {
       });
       this.schedulerRegistry.addCronJob(groupEvent.name, job);
       job.start();
-      Logger.log('Registered CronJob for ' + groupEvent.name, 'GroupEventSchedule');
+      Logger.log('Registered CronJob for ' + groupEvent.name + ' | Next execution: ' + job.nextDate().toDate().toLocaleString(), 'GroupEventSchedule');
     });
   }
 
   private async resolveContacts(groupEvent: GroupEvent, date: Date): Promise<void> {
+    Logger.log(`Resolving Contacts for ${groupEvent.name}. Writing message to ${groupEvent.leaders.map(l => l.username).toString()}`, 'GroupEventSchedule');
     const groupEventEntry: GroupEventEntry = new GroupEventEntry(groupEvent, date);
     const createdGroupEventEntry = await this.groupEventEntryRepository.create(groupEventEntry);
     const savedGroupEventEntry = await this.groupEventEntryRepository.save(createdGroupEventEntry);
