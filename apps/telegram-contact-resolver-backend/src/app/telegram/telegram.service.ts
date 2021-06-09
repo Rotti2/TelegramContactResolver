@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import * as TelegramBot from 'node-telegram-bot-api';
 import { Message, User } from 'node-telegram-bot-api';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,6 +31,7 @@ export class TelegramService {
         .catch(() => {
           this.bot.sendMessage(msg.chat.id, `Tut mir leid, du bist kein Leiter von ${this.configService.get('general.name')}.`);
         });
+      Logger.log(`Nachricht von ${msg.from.username}: ${msg.text}`);
     });
 
     this.bot.on('callback_query', async (query) => {
