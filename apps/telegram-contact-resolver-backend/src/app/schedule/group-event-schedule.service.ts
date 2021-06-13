@@ -37,7 +37,7 @@ export class GroupEventScheduleService {
     this.telegramService.sendContactResolveMessage(savedGroupEventEntry);
   }
 
-  @Cron('0 0 12 * * SUN *')
+  @Cron(' 0 15 * * SUN')
   handleWeeklyCron(): void {
     const today = new Date();
     const aWeekAgo = new Date();
