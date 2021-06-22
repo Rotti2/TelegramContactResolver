@@ -78,6 +78,9 @@ export class TelegramService {
   async sendContactResolveMessage(groupEventEntry: GroupEventEntry): Promise<void> {
     const leaders: TelegramUser[] = groupEventEntry.groupEvent.leaders;
     for (const leader of leaders) {
+      if (!leader.chatId) {
+        continue;
+      }
       const msg = await this.bot.sendMessage(leader.chatId, `${groupEventEntry.groupEvent.name} (${groupEventEntry.date.toLocaleDateString()})\n\nHallo ${leader.username}\nDeine Gruppenstunde vom ${groupEventEntry.date.toLocaleDateString()} ist soeben geendet. Bitte wähle aus, wer anwesend war:`, {
         reply_markup: this.telegramKeyboardMapper.mapGroupEventEntryToKeyboard(groupEventEntry)
       });
